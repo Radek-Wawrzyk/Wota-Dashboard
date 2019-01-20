@@ -7,6 +7,7 @@
   border-right: 1px solid $lightBorder;
   transition: transform 0.25s;
   background: white;
+  z-index: 100;
   &.active {
     transform: translate3d(0,0,0);
   }
