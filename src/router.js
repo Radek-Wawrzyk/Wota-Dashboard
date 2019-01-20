@@ -10,7 +10,14 @@ export default new Router({
     {
       path: '/',
       name: 'Dashboard',
-      component: () => import('./views/Dashboard.vue')
+      component: () => import('./views/Dashboard.vue'),
+      children: [
+        {
+          path: '/instruktorzy',
+          name: 'Instructors',
+          component: () => import('./views/Instructors/Instructors.vue')
+        }
+      ]
     }
   ]
 });
