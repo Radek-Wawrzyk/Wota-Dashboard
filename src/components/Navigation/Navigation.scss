@@ -1,0 +1,113 @@
+.navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  padding: 0 25px;
+  border-bottom: 1px solid $lightBorder;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &-column {
+    position: relative;
+  }
+  &-user {
+    line-height: 40px;
+  }
+  &-logo {
+    width: 150px;
+    height: auto;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  &-settings {
+    display: flex;
+    &-item {
+      margin: 0 15px 0 0;
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+  }
+}
+
+//Hamburger menu
+
+.navigation-button {
+  display: none;
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  &-bar {
+    display: block;
+    width: 100%;
+    margin-bottom: 4px;
+    height: 2px;
+    background: #2c3e50;
+    border-radius: 40px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    transform-origin: 0 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &.active {
+    .navigation-button-bar:nth-child(1) {
+      transform: translate(4px, 0) rotate(45deg);
+    }
+    .navigation-button-bar:nth-child(2) {
+      transform: translate(10px, 0);
+      opacity: 0;
+    }
+    .navigation-button-bar:nth-child(3) {
+      transform: translate(2px, 2px) rotate(-45deg);
+    }
+    .navigation-button-bar {
+      transform: translate3d(0, 80px, 0) scale(1, 1);
+      transition: transform 0.8s ease, opacity 0.3s;
+      &:hover:after {
+        opacity: 1;
+        transform: translate3d(0, 16px, 0);
+      }
+    }
+  }
+}
+
+//Media
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    padding: 0 15px;
+    &-button {
+      display: block;
+    }
+    &-logo {
+      width: 100px;
+    }
+    &-user {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .navigation {
+    &-logo {
+      width: 80px;
+    }
+  }
+}
