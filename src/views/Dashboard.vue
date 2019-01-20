@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navigation v-on:toggleMenu="toggleMenu($event)" :menuStatus="menuStatus"></Navigation>
-    <!-- <Menu></Menu> -->
+    <Menu :menuStatus="menuStatus"></Menu>
     <main class="main">
       <router-view></router-view>
     </main>
@@ -10,13 +10,13 @@
 
 <script>
 import Navigation from '../components/Navigation/Navigation.vue';
-//import Menu from '../components/Menu/Menu.vue';
+import Menu from '../components/Menu/Menu.vue';
 
 export default {
   name: 'Dashboard',
   components: { 
     Navigation,
-   // Menu
+    Menu
   },
   data: () => ({
     menuStatus: false
