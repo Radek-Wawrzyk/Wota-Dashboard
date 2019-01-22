@@ -1,0 +1,14 @@
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+//Modules
+
+import instructors from './modules/instructors.js';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  modules: {
+    instructors
+  }
+});

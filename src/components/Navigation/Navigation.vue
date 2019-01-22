@@ -13,11 +13,11 @@
     <div class="navigation-column">
       <ul class="navigation-settings">
         <li class="navigation-settings-item">
-          <span class="navigation-user">Admin</span>
+          <span class="navigation-user">Admin Adminowski</span>
         </li>
         <li class="navigation-settings-item">
           <el-button type="danger" round>
-            Logout
+            Wyloguj
           </el-button>
         </li>
       </ul>
