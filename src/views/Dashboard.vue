@@ -5,7 +5,9 @@
     <Overflow :menuStatus="menuStatus" v-on:closeMenu="toggleMenu($event)"></Overflow>
     <Preloader :loading="loading" v-if="token"></Preloader>
     <main class="main">
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </main>
   </div>
 </template>
