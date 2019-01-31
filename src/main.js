@@ -4,12 +4,19 @@ import router from './router.js';
 import store from './store/index.js';
 import './registerServiceWorker';
 
+//CSS libraries and CSS files
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/main.scss';
 
+//Validate librabry
+import VeeValidate from 'vee-validate';
+
 //Use libraries
 Vue.use(ElementUI);
+Vue.use(VeeValidate);
+
+export const $API = Vue.prototype.$API = 'https://httpbin.org/get';
 
 Vue.config.productionTip = false;
 

@@ -1,0 +1,9 @@
+.fade-down {
+  &-enter-active, &-leave-active {
+    transition: opacity 0.3s, transform 0.2s;
+  }
+  &-enter, &-leave-to {
+    opacity: 0;
+    transform: translate3d(0,-10px,0);
+  }
+}

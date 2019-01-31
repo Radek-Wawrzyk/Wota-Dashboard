@@ -16,8 +16,24 @@ export default new Router({
           path: '/instruktorzy',
           name: 'Instructors',
           component: () => import('./views/Instructors/Instructors.vue')
+        },
+        {
+          path: '/instruktorzy/:id',
+          name: 'editInstructor',
+          component: () => import('./views/Instructors/editInstructors.vue'),
+          props: true
+        },
+        {
+          path: '/dane-kontaktowe',
+          name: 'ContactData',
+          component: () => import('./views/Contact/Contact.vue')
         }
       ]
+    },
+    {
+      path: '/logowanie',
+      name: 'Login',
+      component: () => import('./views/Login/Login.vue')
     }
   ]
 });

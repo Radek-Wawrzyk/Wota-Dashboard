@@ -1,0 +1,26 @@
+.contact-tile {
+  background: white;
+  padding: 50px;
+  border: 1px solid $lightBorder;
+  &-center {
+    text-align: center;
+  }
+  label {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+//Media 
+
+@media screen and (max-width: 1152px) {
+  .contact-tile {
+    padding: 30px 15px;
+  }
+}
+
+@media screen and (max-width: $md) {
+  .contact-tile {
+    margin: 0 0 50px 0;
+  }
+}
