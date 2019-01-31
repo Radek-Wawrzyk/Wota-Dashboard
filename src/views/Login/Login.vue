@@ -67,7 +67,7 @@ export default {
         this.loading = true;
         try {
           const response = await axios.post(`${$API}/login`, this.credentials);
-          response ? this.$store.commit('LOGIN', this.credentials) : false;
+          response ? this.$store.commit('LOGIN', response.data) : false;
         } catch(error) {
           this.loading = false;
 
