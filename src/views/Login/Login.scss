@@ -1,0 +1,43 @@
+.login {
+  &-logo {
+    margin: 50px auto;
+    width: 200px;
+    text-align: center;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  &-form {
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 50px;
+    border: 1px solid $lightBorder;
+    &-submit {
+      text-align: center;
+    }
+  }
+  &-footer {
+    margin: 100px 0 0 0;
+    text-align: center;
+    color: $secondary;
+    font-size: 14px;
+    a {
+      color: $primary;
+      
+    }
+  }
+}
+
+//Media
+
+@media screen and (max-width: 480px) {
+  .login {
+    &-form {
+      width: 96%;
+      padding: 40px 15px;
+    }
+  }
+}
