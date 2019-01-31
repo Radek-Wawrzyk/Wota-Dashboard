@@ -43,12 +43,15 @@
         title="Radosław Wawrzyk - Front End Developer"
       >Radziu</a>
     </footer>
+    <Preloader :loading="loading" v-if="!token"/>
   </main>
 </template>
 
 <script>
 import { $API } from '@/main.js';
 import axios from 'axios';
+import Preloader from '@/components/Preloader/Preloader.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: "Login",
@@ -57,19 +60,31 @@ export default {
       email: "",
       password: ""
     },
-    loading: false
+    loading: true,
+    loadingRequest: false
   }),
+  components: { 
+    Preloader
+  },
+  computed: mapState({
+    token: state => state.auth.token
+  }),
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  },
   methods: {
     async submitForm() {
       const valid = await this.$validator.validateAll();
 
       const request = async () => {
-        this.loading = true;
+        this.loadingRequest = true;
         try {
           const response = await axios.post(`${$API}/login`, this.credentials);
           response ? this.$store.commit('LOGIN', response.data) : false;
         } catch(error) {
-          this.loading = false;
+          this.loadingRequest = false;
 
           this.$notify({
             title: "Błąd",
