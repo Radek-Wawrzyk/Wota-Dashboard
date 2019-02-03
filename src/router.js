@@ -18,10 +18,20 @@ export default new Router({
           component: () => import('./views/Instructors/Instructors.vue')
         },
         {
+          path: '/instruktorzy/dodaj',
+          name: 'AddInstructor',
+          component: () => import('./views/Instructors/AddInstructor.vue')
+        },
+        {
           path: '/instruktorzy/:id',
           name: 'editInstructor',
           component: () => import('./views/Instructors/editInstructors.vue'),
           props: true
+        },
+        {
+          path: '/pojazdy',
+          name: 'Vehicles',
+          component: () => import('./views/Vehicles/Vehicles.vue')
         },
         {
           path: '/dane-kontaktowe',

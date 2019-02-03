@@ -1,0 +1,103 @@
+.instructor {
+  &-tile, &-stats, &-categories {
+    background: white;
+    border: 1px solid $lightBorder;
+    padding: 25px;
+  }
+  &-stats {
+    margin: 0 0 25px 0;
+    display: flex;
+    justify-content: space-between;
+    &-item {
+      text-align: center;
+      width: 150px;
+      &-name {
+        font-size: 20px;
+        margin: 0 0 15px 0;
+      }
+      &-value {
+        display: block;
+        padding: 12px 25px;
+        border: 1px solid $lightBorder;
+        background: white;
+        font-weight: 600;
+        color: $secondary;
+      }
+    }
+  }
+  &-categories {
+    .el-input {
+      margin: 0 0 25px 0;
+    }
+    .el-tag {
+      margin: 0 10px 10px 0;
+    }
+  }
+  &-avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+      border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 178px;
+      height: 178px;
+      line-height: 178px;
+      text-align: center;
+    }  
+  }
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
+
+
+//Media
+
+@media screen and (max-width: 992px) {
+  .instructor {
+    &-tile, &-stats, &-categories {
+      margin: 0 0 50px 0;
+    }
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .instructor-stats-item:last-of-type {
+    .instructor-stats-item-value {
+      border-left: none;
+    }
+  }
+}
