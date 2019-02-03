@@ -9,6 +9,7 @@
         <router-view></router-view>
       </transition>
     </main>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import Navigation from '../components/Navigation/Navigation.vue';
 import Menu from '../components/Menu/Menu.vue';
 import Overflow from '../components/Overflow/Overflow.vue';
 import Preloader from '../components/Preloader/Preloader.vue';
+import Footer from '../components/Footer/Footer.vue';
 import { mapState } from 'vuex';
 
 export default {
@@ -25,7 +27,8 @@ export default {
     Navigation,
     Menu,
     Overflow,
-    Preloader
+    Preloader,
+    Footer
   },
   data: () => ({
     menuStatus: false,

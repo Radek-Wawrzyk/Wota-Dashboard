@@ -1,0 +1,31 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background: white;
+  border-top: 1px solid $lightBorder;
+  padding: 0 25px;
+  &-text {
+    text-align: right;
+    line-height: 40px;
+    color: $secondary;
+    font-size: 15px;
+    a {
+      color: $primary;
+    }
+  }
+}
+
+//Media
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 0 10px;
+    &-text {
+      text-align: center;
+      font-size: 13px;
+    }
+  }
+}
