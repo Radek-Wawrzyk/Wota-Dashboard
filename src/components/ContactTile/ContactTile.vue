@@ -2,7 +2,7 @@
   <el-form class="contact-tile">
     <el-form-item label="Tytuł Adresu">
       <el-input
-        v-model="tile.addressName"
+        v-model="tile.title"
         type="text"
         placeholder="Szkoła Wota "
         name="address name"
@@ -17,7 +17,7 @@
     </el-form-item>
     <el-form-item label="Nr. tel. kontaktowy">
       <el-input
-        v-model="tile.tel"
+        v-model="tile.phone"
         type="text"
         placeholder="+48 123 456 789"
         name="phone"
@@ -29,7 +29,7 @@
     </el-form-item>
     <el-form-item label="Adres słownie">
       <el-input
-        v-model="tile.addressLocation"
+        v-model="tile.adress"
         type="text"
         placeholder="ul. Nawrot 46, Łódź "
         name="address location"
@@ -44,7 +44,7 @@
     </el-form-item>
     <el-form-item label="Link do Google Maps">
       <el-input
-        v-model="tile.mapLink"
+        v-model="tile.link"
         type="text"
         placeholder="google.maps/123"
         name="map link"
@@ -58,7 +58,7 @@
       <el-row :gutter="15">
         <el-col :span="12">
           <el-input
-            v-model="tile.hours.min"
+            v-model="tile.openHours.from"
             type="text"
             placeholder="8:00"
             name="hours min"
@@ -67,7 +67,7 @@
         </el-col>
         <el-col :span="12">
           <el-input
-            v-model="tile.hours.max"
+            v-model="tile.openHours.to"
             type="text"
             placeholder="16:00"
             name="hours max"
@@ -86,7 +86,7 @@
       <el-row :gutter="15">
         <el-col :span="12">
           <el-input
-            v-model="tile.days.min"
+            v-model="tile.openDays.from"
             type="text"
             placeholder="Pt"
             name="days min"
@@ -95,7 +95,7 @@
         </el-col>
         <el-col :span="12">
           <el-input
-            v-model="tile.days.max"
+            v-model="tile.openDays.to"
             type="text"
             placeholder="Pon"
             name="days max"
@@ -123,21 +123,21 @@ import { $API } from "@/main.js";
 export default {
   name: "ContactTile",
   props: {
-    location: String
+    index: String
   },
   data: () => ({
     tile: {
-      addressName: "",
-      tel: "",
-      addressLocation: "",
-      mapLink: "",
-      hours: {
-        min: "",
-        max: ""
+      title: "",
+      phone: "",
+      adress: "",
+      link: "",
+      openHours: {
+        from: "",
+        to: ""
       },
-      days: {
-        min: "",
-        max: ""
+      openDays: {
+        from: "",
+        to: ""
       }
     },
     loading: false
@@ -150,8 +150,9 @@ export default {
         this.loading = true;
 
         try {
-          const response = await axios.post(`${$API}/contact/${this.location}`, this.tile);
-         
+          const response = await axios.put(`${$API}/contact/${this.tile._id}/update`, this.tile);
+          this.loading = false;
+          
           this.$notify({
             title: "Sukces!",
             message: "Pomyślnie zapisano dane!",
@@ -173,9 +174,9 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get(`${$API}/contact/${this.location}`);
-      response ? this.tile = response.data : false;
-    } catch (error) {
+      const response = await axios.get(`${$API}/contact`);
+      response.data ? this.tile = response.data[this.index] : false;
+    } catch(error) {
       this.$notify({
         title: "Błąd",
         message: "Błąd serwera!",

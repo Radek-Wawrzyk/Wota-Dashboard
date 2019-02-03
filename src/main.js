@@ -16,7 +16,7 @@ import VeeValidate from 'vee-validate';
 Vue.use(ElementUI);
 Vue.use(VeeValidate);
 
-export const $API = Vue.prototype.$API = 'https://httpbin.org/get';
+export const $API = Vue.prototype.$API = 'http://hubertkuzdak.com';
 
 Vue.config.productionTip = false;
 
