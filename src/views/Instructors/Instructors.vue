@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import { $API } from '@/main.js';
 
 export default {
   name: "Instructors",
@@ -71,7 +72,7 @@ export default {
           type: "error"
         });
       }
-     }
+    }
   },
   async created() {
     try {

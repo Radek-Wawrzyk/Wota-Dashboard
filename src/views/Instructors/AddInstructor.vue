@@ -68,6 +68,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { $API } from '@/main.js';
+
 export default {
   name: "AddInstructors",
   data: () => ({

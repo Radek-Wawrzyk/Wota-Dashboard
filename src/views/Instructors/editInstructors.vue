@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import { $API } from '@/main.js';
 
 export default {
   name: "editInstructors",
@@ -95,7 +96,7 @@ export default {
     },
     async edit() {
       try {
-        const response = await axios.put(`${API}/instructors/:${this.id}`);
+        const response = await axios.put(`${API}/instructors/:${this.id}`, this.instructor);
         response.data ? (this.instructor = response.data) : false;
         this.$router.push("/instruktorzy");
 
