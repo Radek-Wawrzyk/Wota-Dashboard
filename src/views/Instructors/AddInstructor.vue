@@ -12,7 +12,7 @@
             <el-form-item>
               <el-input
                 type="text"
-                v-model="instructor.name"
+                v-model="instructor.fullname"
                 placeholder="Imię i nazwisko"
                 name="name"
                 v-validate="'required'"
@@ -75,11 +75,10 @@ export default {
   name: "AddInstructors",
   data: () => ({
     instructor: {
-      name: "",
+      fullname: "",
       description: "",
-      opinions: 0,
-      avg: 0,
-      categories: ["A1", "A2"]
+      categories: [],
+      avatar: 'x'
     },
     imageUrl: "",
     newCategory: ""
@@ -90,17 +89,14 @@ export default {
       this.newCategory = "";
     },
     deleteCategory(category) {
-      this.instructor.categories.splice(
-        this.instructor.categories.indexOf(category)
-      );
+      this.instructor.categories.splice(this.instructor.categories.indexOf(category), 1);
     },
     async addInstructor() {
       const valid = await this.$validator.validateAll();
 
       const request = async () => {
         try {
-          const response = await axios.post(`${API}/instructors/add-instructor`);
-          response.data ? (this.instructor = response.data) : false;
+          const response = await axios.post(`${$API}/instructors`, this.instructor);
           this.$router.push("/instruktorzy");
 
           this.$notify({

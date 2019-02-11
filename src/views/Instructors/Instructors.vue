@@ -17,7 +17,7 @@
           <el-input v-model="search" size="mini" placeholder="Znajdź instruktora"/>
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="$router.push(`/instruktorzy/${scope.row.id}`)">Edytuj</el-button>
+          <el-button size="mini" @click="$router.push(`/instruktorzy/${scope.row._id}`)">Edytuj</el-button>
           <el-button size="mini" type="danger" @click="deleteInstructor(scope)">Usuń</el-button>
         </template>
       </el-table-column>
