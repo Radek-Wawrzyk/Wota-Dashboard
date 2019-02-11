@@ -12,7 +12,7 @@
               
             </el-form-item>
             <el-form-item>
-              <el-input type="text" v-model="instructor.name"></el-input>
+              <el-input type="text" v-model="instructor.fullname"></el-input>
             </el-form-item>
             <el-form-item>
               <el-input type="textarea" rows="7" v-model="instructor.description"></el-input>
@@ -52,16 +52,10 @@ import { $API } from '@/main.js';
 export default {
   name: "editInstructors",
   props: {
-    id: Number
+    id: String
   },
   data: () => ({
-    instructor: {
-      name: "Jan Kowalski",
-      description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. A voluptate eaque laboriosam impedit sunt quibusdam fugiat, provident odio consectetur ratione optio ullam! Dolore nihil repudiandae voluptatem inventore maiores a ratione!",
-      opinions: 16,
-      avg: 4.5,
-      categories: ["A1", "A2"]
-    },
+    instructor: {},
     imageUrl: '',
     newCategory: ""
   }),
@@ -71,11 +65,11 @@ export default {
       this.newCategory = "";
     },
     deleteCategory(category) {
-      this.instructor.categories.splice(this.instructor.categories.indexOf(category));
+      this.instructor.categories.splice(this.instructor.categories.indexOf(category), 1);
     },
     async deleteInstructor() {
       try {
-        const response = await axios.delete(`${$API}/instructors/delete/:${this.instructor.id}`);
+        const response = await axios.delete(`${$API}/instructors/${this.instructor._id}`);
 
         if (response) {
           this.$router.push("/instruktorzy");
@@ -96,8 +90,7 @@ export default {
     },
     async edit() {
       try {
-        const response = await axios.put(`${API}/instructors/:${this.id}`, this.instructor);
-        response.data ? (this.instructor = response.data) : false;
+        const response = await axios.put(`${$API}/instructors/${this.instructor._id}/update`, this.instructor);
         this.$router.push("/instruktorzy");
 
         this.$notify({
@@ -116,8 +109,8 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get(`${$API}/instructors/:${this.id}`);
-      response.data ? (this.instructor = response.data) : false;
+      const response = await axios.get(`${$API}/instructors/${this.id}`);
+      response.data ? (this.instructor = response.data.instructor) : false;
     } catch (error) {
       this.$notify({
         title: "Błąd",

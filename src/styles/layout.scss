@@ -18,6 +18,11 @@ body { background-color:#f8f8f8; }
 //Section 
 
 .section {
+  &-one-column {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+  }
   &-header {
     display: flex;
     flex-wrap: wrap;
@@ -36,6 +41,9 @@ body { background-color:#f8f8f8; }
   &-footer {
     margin: 25px 0;
     text-align: right;
+  }
+  &-footer-center {
+    text-align: center;
   }
 }
 
