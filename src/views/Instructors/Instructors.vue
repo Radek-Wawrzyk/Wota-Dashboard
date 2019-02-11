@@ -2,16 +2,16 @@
   <section id="instructors" class="section">
     <header class="section-header">
       <h1 class="section-header-title">Instruktorzy</h1>
-      <el-button type="danger" round>Dodaj</el-button>
+      <el-button type="danger" round @click="$router.push(`/instruktorzy/dodaj`)">Dodaj</el-button>
     </header>
     <el-table
       :data="instructors.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       border
-      empty-text="Nie znaleziono tego instruktora"
+      empty-text="Brak instruktorów"
     >
-      <el-table-column label="Instruktor" prop="name"></el-table-column>
-      <el-table-column label="Kursy" prop="courses"></el-table-column>
+      <el-table-column label="Instruktor" prop="fullname"></el-table-column>
+      <el-table-column label="Kursy" prop="categories"></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
           <el-input v-model="search" size="mini" placeholder="Znajdź instruktora"/>
@@ -33,37 +33,22 @@ export default {
   name: "Instructors",
   data: () => ({
     search: "",
-    instructors: [
-      {
-        id: 1,
-        name: "Tom Krabson",
-        courses: "A1, B1, B2"
-      },
-      {
-        id: 2,
-        name: "Andrzej Sieka",
-        courses: "A1, B1, B2, C1, C3"
-      },
-      {
-        id: 3,
-        name: "Morgan Wpierdziel",
-        courses: "C1, C2, B2"
-      },
-      {
-        id: 4,
-        name: "Jessy Hamilton",
-        courses: "A1, B1"
-      }
-    ]
+    instructors: []
   }),
   methods: {
     async deleteInstructor(scope) {
       try {
-        const response = await axios.delete(`${$API}/instructors/delete/:${scope.row.id}`);
+        const response = await axios.delete(`${$API}/instructors/${scope.row._id}`);
 
         if (response) {
-          const filteredInstructors = this.instructors.filter(instructor => instructor.id !== scope.row.id);
-          this.instructors = filteredInstructors
+          const filteredInstructors = this.instructors.filter(instructor => instructor._id !== scope.row.id);
+          this.instructors = filteredInstructors;
+
+          this.$notify({
+            title: "Sukces",
+            message: "Pomyślnie usunięto instruktora",
+            type: "success"
+          });
         }
       } catch(error) {
         this.$notify({
