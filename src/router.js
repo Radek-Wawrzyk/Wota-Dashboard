@@ -34,9 +34,25 @@ export default new Router({
           component: () => import('./views/Vehicles/Vehicles.vue')
         },
         {
+          path: '/pojazdy/dodaj',
+          name: 'AddVehicle',
+          component: () => import('./views/Vehicles/AddVehicle.vue')
+        },
+        {
+          path: '/pojazdy/:id',
+          name: 'EditVehicle',
+          component: () => import('./views/Vehicles/EditVehicle.vue'),
+          props: true
+        },
+        {
           path: '/dane-kontaktowe',
           name: 'ContactData',
           component: () => import('./views/Contact/Contact.vue')
+        },
+        {
+          path: '/galeria',
+          name: 'Gallery',
+          component: () => import('./views/Gallery/Gallery.vue')
         }
       ]
     },

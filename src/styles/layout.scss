@@ -38,6 +38,12 @@ body { background-color:#f8f8f8; }
       color: $secondary;
     }
   }
+  &-coming-soon {
+    text-align: center;
+    margin: 100px 0;
+    color: #b8bbc0;
+    font-size: 20px;
+  }
   &-footer {
     margin: 25px 0;
     text-align: right;
