@@ -27,8 +27,8 @@
         </router-link>
       </li>
       <li class="menu-list-item">
-        <router-link to="/terminy-kursow" aria-label="Terminy kursów" title="Terminy kursów" class="menu-list-item-link">
-          Terminy kursów
+        <router-link to="/projekty" aria-label="Projekty" title="Projekty" class="menu-list-item-link">
+          Projekty
         </router-link>
       </li>
     </ul>

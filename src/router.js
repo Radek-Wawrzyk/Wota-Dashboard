@@ -18,7 +18,7 @@ export default new Router({
           component: () => import('./views/Instructors/Instructors.vue')
         },
         {
-          path: '/instruktorzy/dodaj',
+          path: '/instruktorzy/dodaj-instruktora',
           name: 'AddInstructor',
           component: () => import('./views/Instructors/AddInstructor.vue')
         },
@@ -34,7 +34,7 @@ export default new Router({
           component: () => import('./views/Vehicles/Vehicles.vue')
         },
         {
-          path: '/pojazdy/dodaj',
+          path: '/pojazdy/dodaj-pojazd',
           name: 'AddVehicle',
           component: () => import('./views/Vehicles/AddVehicle.vue')
         },
@@ -53,6 +53,21 @@ export default new Router({
           path: '/galeria',
           name: 'Gallery',
           component: () => import('./views/Gallery/Gallery.vue')
+        },
+        {
+          path: '/projekty',
+          name: 'Projects',
+          component: () => import('./views/Projects/Projects.vue')
+        },
+        {
+          path: '/projekty/dodaj-projekt',
+          name: 'AddProject',
+          component: () => import('./views/Projects/AddProject.vue')
+        },
+        {
+          path: '/projekty/:id',
+          name: 'EditProject',
+          component: () => import('./views/Projects/EditProject.vue')
         }
       ]
     },
