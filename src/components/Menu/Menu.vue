@@ -2,7 +2,7 @@
   <aside class="menu" :class="menuStatus ? 'active' : ''">
     <ul class="menu-list">
       <li class="menu-list-item">
-        <router-link to="/kursy-i-szkolenia" aria-label="Kursy/Szkolenia" title="Kursy/Szkolenia" class="menu-list-item-link">
+        <router-link to="/kursy" aria-label="Kursy/Szkolenia" title="Kursy/Szkolenia" class="menu-list-item-link">
           Kursy i Szkolenia
         </router-link>
       </li>

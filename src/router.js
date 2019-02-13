@@ -68,7 +68,22 @@ export default new Router({
           path: '/projekty/:id',
           name: 'EditProject',
           component: () => import('./views/Projects/EditProject.vue')
-        }
+        },
+        {
+          path: '/kursy',
+          name: 'Courses',
+          component: () => import('./views/Courses/Courses.vue')
+        },
+        {
+          path: '/kursy/dodaj-kurs',
+          name: 'AddCourse',
+          component: () => import('./views/Courses/AddCourse.vue')
+        },
+        {
+          path: '/kursy/:id',
+          name: 'EditCourse',
+          component: () => import('./views/Courses/EditCourse.vue')
+        },
       ]
     },
     {
