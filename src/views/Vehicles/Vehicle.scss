@@ -1,0 +1,24 @@
+.vehicle {
+  &-categories {
+    .el-input {
+      margin: 0 0 25px 0;
+    }
+    span {
+      margin: 0 5px 5px 0;
+    }
+  }
+  &-tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+//Media
+
+@media screen and (max-width: 768px) {
+  .vehicle {
+    &-tags {
+      justify-content: center;
+    }
+  }
+}
