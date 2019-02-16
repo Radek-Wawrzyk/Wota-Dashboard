@@ -44,8 +44,8 @@ export default {
         const response = await axios.delete(`${$API}/vehicles/${scope.row._id}`);
 
         if (response) {
-          const filteredIvehicles = this.vehicles.filter(instructor => vehicle._id !== scope.row._id);
-          this.vehicles = filteredInstructors;
+          const filteredVehicles = this.vehicles.filter(vehicle => vehicle._id !== scope.row._id);
+          this.vehicles = filteredVehicles;
 
           this.$notify({
             title: "Sukces",
