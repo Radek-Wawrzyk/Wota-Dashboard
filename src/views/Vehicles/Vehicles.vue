@@ -62,7 +62,6 @@ export default {
       }
     },
     async changeVehicleStatus(scope) {
-      console.log(scope._id)
       try {
         const response = await axios.put(`${$API}/vehicles/${scope._id}/update`, scope);
       } catch(error) {

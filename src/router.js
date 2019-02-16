@@ -67,7 +67,8 @@ export default new Router({
         {
           path: '/projekty/:id',
           name: 'EditProject',
-          component: () => import('./views/Projects/EditProject.vue')
+          component: () => import('./views/Projects/EditProject.vue'),
+          props: true
         },
         {
           path: '/kursy',
@@ -82,7 +83,8 @@ export default new Router({
         {
           path: '/kursy/:id',
           name: 'EditCourse',
-          component: () => import('./views/Courses/EditCourse.vue')
+          component: () => import('./views/Courses/EditCourse.vue'),
+          props: true
         },
       ]
     },

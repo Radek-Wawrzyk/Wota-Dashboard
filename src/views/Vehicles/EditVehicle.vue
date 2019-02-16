@@ -81,12 +81,12 @@ export default {
       
       const request = async () => {
         try {
-          const response = await axios.post(`${$API}/vehicles/${this.id}/update`, this.vehicle);
+          const response = await axios.put(`${$API}/vehicles/${this.id}/update`, this.vehicle);
           this.$router.push("/pojazdy");
 
           this.$notify({
             title: "Sukces!",
-            message: "Pomyślnie edytowano pojazd",
+            message: "Pomyślnie zaktualizowano pojazd",
             type: "success"
           });
         } catch (error) {
