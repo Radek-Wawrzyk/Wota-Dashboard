@@ -38,20 +38,7 @@
           </transition>
         </el-form-item>
         <el-form-item>
-          <el-input
-            type="textarea"
-            rows="7"
-            v-model="project.content"
-            placeholder="Treść"
-            name="content"
-            v-validate="'required'"
-          ></el-input>
-          <transition name="fade-down">
-            <span
-              class="el-form-item__error"
-              v-if="errors.has('content')"
-            >{{errors.first('content')}}</span>
-          </transition>
+          <wysiwyg v-model="project.content" placeholder="Treść projektu"/>
         </el-form-item>
       </el-form>
       <div class="project-img">

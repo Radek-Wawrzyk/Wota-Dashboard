@@ -8,13 +8,18 @@ import './registerServiceWorker';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/main.scss';
+import "vue-wysiwyg/dist/vueWysiwyg.css";
 
 //Validate librabry
 import VeeValidate from 'vee-validate';
 
+//Wysiwyg libray
+import wysiwyg from "vue-wysiwyg";
+
 //Use libraries
 Vue.use(ElementUI);
 Vue.use(VeeValidate);
+Vue.use(wysiwyg, {});
 
 export const $API = Vue.prototype.$API = 'http://hubertkuzdak.com';
 
