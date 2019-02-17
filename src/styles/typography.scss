@@ -5,7 +5,8 @@
 //vue-wysiwyg component styles
 
 .editr--content {
-  h1, h2, h3, h4, h5, h6 { font-weight: 600; }
+  h1, h2, h3, h4, h5, h6 { font-weight: 500; }
+  h1 { font-size: 40px; }
   h2 { font-size: 36px; }
   h3 { font-size: 32px; }
   h4 { font-size: 28px; }
@@ -14,5 +15,13 @@
   p { font-size: 16px; }
   b { font-weight: 800; }
   i { font-style: italic }
+  ul {
+    list-style: disc;
+    margin: 0 0 0 15px;
+  }
+  ol {
+    list-style: decimal;
+    margin: 0 0 0 15px;
+  }
 }
 
