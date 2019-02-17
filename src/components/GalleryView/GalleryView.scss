@@ -1,0 +1,30 @@
+.gallery-wrapper{
+    padding: 25px;
+    background: white;
+    border: 1px solid $lightBorder;
+    margin: 0 0 25px 0;
+    .gallery-items{
+        display: flex;
+        flex-wrap: wrap;
+        .gallery-item{
+            padding-top: 15px;
+            padding-right: 15px;
+            img{
+                width: 150px;
+                height: 150px;
+            }
+            p{
+                color: #F56C6C;
+                cursor: pointer;
+                text-align: center;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .gallery-buttons{
+        margin-top: 15px;
+        text-align: center;
+    }
+}
