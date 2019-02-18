@@ -8,10 +8,14 @@ import './registerServiceWorker';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/main.scss';
+import locale from 'element-ui/lib/locale/lang/pl'
 
 //Validate librabry
 import VeeValidate from 'vee-validate';
 
+
+
+Vue.use(ElementUI, { locale })
 //Use libraries
 Vue.use(ElementUI);
 Vue.use(VeeValidate);

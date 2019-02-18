@@ -5,6 +5,9 @@
       <el-button type="danger" round @click="editVehicle">Zapisz</el-button>
     </header>
     <div class="vehicle">
+      <!-- {{this.vehicle}} -->
+      <!-- <hr> -->
+      <!-- {{this.vehicle.image}} -->
       <el-form>
         <el-form-item>
           <el-input
@@ -18,7 +21,9 @@
           </transition>
         </el-form-item>
         <el-form-item>
-          <input type="file" ref="fileInput" @change="onFileSelected"/>
+          <!-- <img :src="vehicle.image" width="80" height="80">
+          <br> -->
+          <input type="file" @change="onFileSelected">
         </el-form-item>
         <el-form-item>
           <div class="vehicle-categories">
@@ -48,15 +53,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { $API } from '@/main.js';
+import axios from "axios";
+import { $API } from "@/main.js";
 
 export default {
   name: "AddVehicle",
   data: () => ({
     vehicle: {},
     newCategory: "",
-    file: null
   }),
   props: {
     id: String
@@ -67,47 +71,69 @@ export default {
       this.newCategory = "";
     },
     deleteCategory(category) {
-      this.vehicle.categories.splice(this.vehicle.categories.indexOf(category), 1);
+      this.vehicle.categories.splice(
+        this.vehicle.categories.indexOf(category),
+        1
+      );
     },
     onFileSelected(event) {
-      this.file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('image', this.file);
-      this.vehicle.img = formData;
+      this.vehicle.image = event.target.files[0];
     },
     async editVehicle() {
-      console.log(this.vehicle)
-      const valid = await this.$validator.validateAll();
+      // const valid = await this.$validator.validateAll();
+      const formData = new FormData();
+      formData.append("image", this.vehicle.image, this.vehicle.image.name);
+      formData.append("title", this.vehicle.title);
+      formData.append("categories", this.vehicle.categories);
+      console.log(formData);
       
-      const request = async () => {
-        try {
-          const response = await axios.put(`${$API}/vehicles/${this.id}/update`, this.vehicle);
-          this.$router.push("/pojazdy");
+      try {
+        await axios.put(
+          `${$API}/vehicles/${this.id}/update`,
+          this.vehicle
+        );
+        this.$router.push("/pojazdy");
+        this.$notify({
+          title: "Sukces!",
+          message: "Pomyślnie zaktualizowano pojazd",
+          type: "success"
+        });
+      } catch (error) {
+        this.$notify({
+          title: "Błąd",
+          message: "Błąd serwera! Nie udało się edytować pojazdu.",
+          type: "error"
+        });
+      }
 
-          this.$notify({
-            title: "Sukces!",
-            message: "Pomyślnie zaktualizowano pojazd",
-            type: "success"
-          });
-        } catch (error) {
-          console.log(error.message);
-          this.$notify({
-            title: "Błąd",
-            message: "Błąd serwera! Nie udało się edytować pojazdu.",
-            type: "error"
-          });
-        }
-      };
+      // const request = async () => {
+      //   try {
+      //     const response = await axios.put(`${$API}/vehicles/${this.id}/update`, this.vehicle);
+      //     this.$router.push("/pojazdy");
 
-      valid ? request() : false;
+      //     this.$notify({
+      //       title: "Sukces!",
+      //       message: "Pomyślnie zaktualizowano pojazd",
+      //       type: "success"
+      //     });
+      //   } catch (error) {
+      //     console.log(error.message);
+      //     this.$notify({
+      //       title: "Błąd",
+      //       message: "Błąd serwera! Nie udało się edytować pojazdu.",
+      //       type: "error"
+      //     });
+      //   }
+      // };
+
+      // valid ? request() : false;
     }
   },
   async created() {
     try {
       const response = await axios.get(`${$API}/vehicles/${this.id}`);
       response.data ? (this.vehicle = response.data.vehicle) : false;
-      console.log(this.vehicle);
-    } catch(error) {
+    } catch (error) {
       this.$notify({
         title: "Błąd",
         message: "Błąd serwera!",

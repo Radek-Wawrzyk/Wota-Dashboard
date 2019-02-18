@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <!-- <footer class="footer">
     <p class="footer-text">
       Panel stworzony przez
       <a
@@ -8,7 +8,7 @@
         title="Radek Wawrzyk - Front End Developer"
       >Radziu</a>
     </p>
-  </footer>
+  </footer> -->
 </template>
 
 <script>

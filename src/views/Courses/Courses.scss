@@ -1,0 +1,40 @@
+.form-row{
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.element-title{
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.item-centered{
+    text-align: center;
+}
+
+.form-item-white{
+    padding: 25px;
+    background: white;
+    border: 1px solid $lightBorder;
+    margin: 0 0 25px 0;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.element-category-title{
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 20px;  
+    border-bottom: 1px solid #ccc;
+}
+
+.submit-button{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}

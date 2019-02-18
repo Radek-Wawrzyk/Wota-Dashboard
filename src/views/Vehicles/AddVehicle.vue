@@ -6,6 +6,7 @@
     </header>
     <div class="vehicle">
       <el-form>
+        {{this.vehicle}}
         <el-form-item>
           <el-input
             placeholder="Nazwa pojazdu"
@@ -18,7 +19,7 @@
           </transition>
         </el-form-item>
         <el-form-item>
-          <input type="file" ref="fileInput" @change="onFileSelected"/>
+          <input type="file" @change="onFileChanged">
         </el-form-item>
         <el-form-item>
           <div class="vehicle-categories">
@@ -48,8 +49,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { $API } from '@/main.js';
+import axios from "axios";
+import { $API } from "@/main.js";
 
 export default {
   name: "AddVehicle",
@@ -58,10 +59,9 @@ export default {
       name: "",
       categories: [],
       status: true,
-      img: null,
+      img: null
     },
-    newCategory: "",
-    file: null
+    newCategory: ""
   }),
   methods: {
     addCategory() {
@@ -69,39 +69,41 @@ export default {
       this.newCategory = "";
     },
     deleteCategory(category) {
-      this.vehicle.categories.splice(this.vehicle.categories.indexOf(category), 1);
+      this.vehicle.categories.splice(
+        this.vehicle.categories.indexOf(category),
+        1
+      );
     },
-    onFileSelected(event) {
-      this.file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('image', this.file);
-      this.vehicle.img = formData;
+    onFileChanged(event) {
+      const file = event.target.files[0];
+      this.vehicle.img = file;
     },
     async addVehicle() {
-      console.log(this.vehicle)
-      const valid = await this.$validator.validateAll();
+      // const valid = await this.$validator.validateAll();
       
-      const request = async () => {
-        try {
-          const response = await axios.post(`${$API}/vehicles`, this.vehicle);
-          this.$router.push("/pojazdy");
+      const formData = new FormData();
+      formData.append("image", this.vehicle.img, this.vehicle.img.name);
+      formData.append("title", this.vehicle.name);
+      formData.append("visible", true);
+      formData.append("categories", this.vehicle.categories);
+      try {
+        const response = await axios.post(`${$API}/vehicles/`, formData);
+        this.$router.push("/pojazdy");
+        this.$notify({
+          title: "Sukces!",
+          message: "Pomyślnie dodano pojazd",
+          type: "success"
+        });
+      } catch (error) {
+        console.log(error.data);
+        this.$notify({
+          title: "Błąd",
+          message: "Błąd serwera! Nie udało się dodać pojazdu.",
+          type: "error"
+        });
+      }
 
-          this.$notify({
-            title: "Sukces!",
-            message: "Pomyślnie Dodano nowy pojazd",
-            type: "success"
-          });
-        } catch (error) {
-          console.log(error.data);
-          this.$notify({
-            title: "Błąd",
-            message: "Błąd serwera! Nie udało się dodać pojazdu.",
-            type: "error"
-          });
-        }
-      };
-
-      valid ? request() : false;
+      // valid ? request() : false;
     }
   }
 };

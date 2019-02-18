@@ -10,7 +10,7 @@
         <span class="navigation-button-bar"></span>
       </button>
     </div>
-    <div class="navigation-column">
+    <!-- <div class="navigation-column">
       <ul class="navigation-settings">
         <li class="navigation-settings-item">
           <span class="navigation-user">Admin Adminowski</span>
@@ -21,7 +21,7 @@
           </el-button>
         </li>
       </ul>
-    </div>
+    </div> -->
   </nav>
 </template>
 

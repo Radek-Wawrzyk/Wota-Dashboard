@@ -77,7 +77,7 @@ export default {
           galery => galery.category === "sala"
         );
         this.selectedFile = null;
-        this.value = "",
+        this.value = "";
 
         this.$notify({
           title: "Sukces!",
