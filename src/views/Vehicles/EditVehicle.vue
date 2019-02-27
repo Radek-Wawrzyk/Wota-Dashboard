@@ -21,15 +21,19 @@
           </transition>
         </el-form-item>
         <el-form-item>
-          <!-- <img :src="vehicle.image" width="80" height="80">
-          <br> -->
-          <input type="file" @change="onFileSelected">
+          <img :src="thumbnailImage ? thumbnailImage : vehicle.image" height="150">
+          <br>
+          <input type="file" @change="onFileChanged">
         </el-form-item>
         <el-form-item>
           <div class="vehicle-categories">
-            <el-input type="text" v-model="newCategory" placeholder="Dodaj kategorię">
+            <el-input
+              type="text"
+              v-model="newCategory"
+              placeholder="Po wpisaniu kategorii np. A należy kliknąć niebieski przycisk po prawo aby dodać kategorię"
+            >
               <template slot="append">
-                <el-button type="danger" @click="addCategory">Dodaj</el-button>
+                <el-button type="danger" @click="addCategory" class="custom-button">Dodaj</el-button>
               </template>
             </el-input>
             <div class="vehicle-tags">
@@ -61,6 +65,7 @@ export default {
   data: () => ({
     vehicle: {},
     newCategory: "",
+    thumbnailImage: null,
   }),
   props: {
     id: String
@@ -76,22 +81,25 @@ export default {
         1
       );
     },
-    onFileSelected(event) {
+    onFileChanged(event) {
       this.vehicle.image = event.target.files[0];
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(event.target.files[0]);
+
+      oFReader.onload = oFREvent => {
+        this.thumbnailImage = oFREvent.target.result;
+      };
     },
     async editVehicle() {
       // const valid = await this.$validator.validateAll();
       const formData = new FormData();
-      formData.append("image", this.vehicle.image, this.vehicle.image.name);
       formData.append("title", this.vehicle.title);
       formData.append("categories", this.vehicle.categories);
-      console.log(formData);
-      
+      formData.append("image", this.vehicle.image, this.vehicle.image.name);
+      formData.append("visible", this.vehicle.visible);
+
       try {
-        await axios.put(
-          `${$API}/vehicles/${this.id}/update`,
-          this.vehicle
-        );
+        await axios.put(`${$API}/vehicles/${this.id}/update`, formData);
         this.$router.push("/pojazdy");
         this.$notify({
           title: "Sukces!",

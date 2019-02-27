@@ -2,7 +2,7 @@
   <section id="courses" class="section">
     <header class="section-header">
       <h1 class="section-header-title">Kursy i szkolenia</h1>
-      <el-button type="danger" round @click="$router.push(`/kursy/dodaj-kurs`)">Dodaj</el-button>
+      <el-button type="danger" round @click="$router.push(`/kurs/`)">Dodaj</el-button>
     </header>
     <el-table
       :data="courses.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -13,10 +13,10 @@
       <el-table-column label="Kurs" prop="title"></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="Znajdź kurs"/>
+          <!-- <el-input v-model="search" size="mini" placeholder="Znajdź kurs"/> -->
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="$router.push(`/kursy/${scope.row._id}`)">Edytuj</el-button>
+          <el-button size="mini" @click="$router.push(`/kurs/${scope.row._id}`)">Edytuj</el-button>
           <el-button size="mini" type="danger" @click="deleteCourse(scope)">Usuń</el-button>
         </template>
       </el-table-column>
@@ -62,6 +62,8 @@ export default {
     try {
       const response = await axios.get(`${$API}/courseList`);
       response ? this.courses = response.data : false;
+      console.log(response);
+      
     } catch (error) {
       this.$notify({
         title: "Błąd",

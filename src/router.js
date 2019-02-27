@@ -76,16 +76,17 @@ export default new Router({
           component: () => import('./views/Courses/Courses.vue')
         },
         {
-          path: '/kursy/dodaj-kurs',
+          path: '/kurs/:id?',
           name: 'AddCourse',
-          component: () => import('./views/Courses/AddCourse.vue')
-        },
-        {
-          path: '/kursy/:id',
-          name: 'EditCourse',
-          component: () => import('./views/Courses/EditCourse.vue'),
+          component: () => import('./views/Courses/AddCourse.vue'),
           props: true
         },
+        // {
+        //   path: '/kursy/:id',
+        //   name: 'EditCourse',
+        //   component: () => import('./views/Courses/EditCourse.vue'),
+        //   props: true
+        // },
       ]
     },
     {

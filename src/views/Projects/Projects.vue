@@ -14,15 +14,15 @@
       <el-table-column label="Podtytuł" prop="subtitle"></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="Znajdź instruktora"/>
+          <!-- <el-input v-model="search" size="mini" placeholder="Znajdź instruktora"/> -->
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="$router.push(`/projekty/${scope.row._id}`)">Edytuj</el-button>
-          <el-button size="mini" type="danger" @click="deleteInstructor(scope)">Usuń</el-button>
-          <el-radio-group v-model="scope.row.status" size="mini" @change="changeProjectStatus(scope.row)">
+          <el-button size="mini" type="danger" @click="deleteProject(scope)">Usuń</el-button>
+          <!-- <el-radio-group v-model="scope.row.status" size="mini" @change="changeProjectStatus(scope.row)">
             <el-radio-button label="On"></el-radio-button>
             <el-radio-button label="Off"></el-radio-button>
-          </el-radio-group>
+          </el-radio-group> -->
         </template>
       </el-table-column>
     </el-table>
@@ -42,11 +42,13 @@ export default {
   }),
   methods: {
     async changeProjectStatus(scope) {
-      try {
-        const response = await axios.put(`${$API}/projects/${scope._id}/update`, scope);
-      } catch(error) {
-        console.log(error.message)
-      }
+      console.log(scope);
+      
+      // try {
+      //   const response = await axios.put(`${$API}/projects/${scope._id}/update`, scope);
+      // } catch(error) {
+      //   console.log(error.message)
+      // }
     },
     async deleteProject(scope) {
       try {

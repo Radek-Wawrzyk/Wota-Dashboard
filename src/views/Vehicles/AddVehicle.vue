@@ -6,7 +6,6 @@
     </header>
     <div class="vehicle">
       <el-form>
-        {{this.vehicle}}
         <el-form-item>
           <el-input
             placeholder="Nazwa pojazdu"
@@ -19,15 +18,17 @@
           </transition>
         </el-form-item>
         <el-form-item>
+          <img v-if="thumbImage" :src="thumbImage" width="150" height="150"><br/>
           <input type="file" @change="onFileChanged">
         </el-form-item>
         <el-form-item>
           <div class="vehicle-categories">
-            <el-input type="text" v-model="newCategory" placeholder="Dodaj kategorię">
+            <el-input type="text" v-model="newCategory" placeholder="Po wpisaniu kategorii np. A należy kliknąć niebieski przycisk po prawo aby dodać kategorię">
               <template slot="append">
-                <el-button type="danger" @click="addCategory">Dodaj</el-button>
+                <el-button type="danger" @click="addCategory"  class="custom-button">Dodaj</el-button>
               </template>
             </el-input>
+
             <div class="vehicle-tags">
               <el-tag
                 v-for="(category, index) in vehicle.categories"
@@ -43,7 +44,7 @@
     </div>
     <footer class="section-footer section-footer-center">
       <el-button type="normal" round @click="$router.go(-1)">Anuluj</el-button>
-      <el-button type="danger" round @click="addVehicle">Zapisz</el-button>
+      <el-button type="danger" round @click="addVehicle" :disabled="!this.vehicle.name || !this.vehicle.img">Zapisz</el-button>
     </footer>
   </section>
 </template>
@@ -61,7 +62,8 @@ export default {
       status: true,
       img: null
     },
-    newCategory: ""
+    newCategory: "",
+    thumbImage: null,
   }),
   methods: {
     addCategory() {
@@ -75,12 +77,17 @@ export default {
       );
     },
     onFileChanged(event) {
-      const file = event.target.files[0];
-      this.vehicle.img = file;
+      this.vehicle.img = event.target.files[0];
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(event.target.files[0]);
+
+      oFReader.onload = oFREvent => {
+        this.thumbImage = oFREvent.target.result;
+      };
     },
     async addVehicle() {
       // const valid = await this.$validator.validateAll();
-      
+
       const formData = new FormData();
       formData.append("image", this.vehicle.img, this.vehicle.img.name);
       formData.append("title", this.vehicle.name);

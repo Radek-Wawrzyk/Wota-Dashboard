@@ -2,52 +2,82 @@
   <section class="section">
     <header class="section-header">
       <h1 class="section-header-title">Edytuj instruktora</h1>
-      <el-button type="danger" round @click="edit">Zapisz</el-button>
     </header>
     <div class="instructor">
-      <el-row :gutter="60">
-        <el-col :md="12">
-          <el-form class="instructor-tile">
-            <el-form-item>
-              
-            </el-form-item>
-            <el-form-item>
-              <el-input type="text" v-model="instructor.fullname"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-input type="textarea" rows="7" v-model="instructor.description"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <el-col :md="12">
-          <div class="instructor-categories">
-            <el-input type="text" v-model="newCategory" placeholder="Dodaj kategorię">
-              <template slot="append">
-                <el-button type="danger" @click="addCategory">Dodaj</el-button>
-              </template>
-            </el-input>
-            <el-tag
-              v-for="(category, index) in instructor.categories"
-              :key="index"
-              closable
-              type="danger"
-              @close="deleteCategory(category)"
-            >{{category}}</el-tag>
+      <el-form class="instructor-tile">
+        <el-form-item>
+          <el-input
+            type="text"
+            v-model="instructor.fullname"
+            placeholder="Imię i nazwisko"
+            name="name"
+            v-validate="'required'"
+          ></el-input>
+          <transition name="fade-down">
+            <span class="el-form-item__error" v-if="errors.has('name')">{{errors.first('name')}}</span>
+          </transition>
+        </el-form-item>
+        <el-form-item>
+          <div class="instructor-img">
+            <div class="instructor-img-tile">
+              <h4 class="instructor-img-tile-header">Dodaj zdjęcie instruktora</h4>
+              <img :src="thumbnailImage ? thumbnailImage : instructor.avatar" height="150">
+            </div>
+            <div class="instructor-img-tile">
+              <input type="file" @change="onFileChanged">
+            </div>
           </div>
-        </el-col>
-      </el-row>
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            type="textarea"
+            rows="7"
+            v-model="instructor.description"
+            placeholder="Opis"
+            name="description"
+            v-validate="'required'"
+          ></el-input>
+          <transition name="fade-down">
+            <span
+              class="el-form-item__error"
+              v-if="errors.has('description')"
+            >{{errors.first('description')}}</span>
+          </transition>
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            type="text"
+            v-model="newCategory"
+            placeholder="Przypisz instruktorowi kategorie np. B1 a następnie kliknij niebieski przycisk dodaj"
+          >
+            <template slot="append">
+              <el-button type="danger" @click="addCategory" class="custom-button">Dodaj</el-button>
+            </template>
+          </el-input>
+          <el-tag
+            v-for="(category, index) in instructor.categories"
+            :key="index"
+            closable
+            type="danger"
+            @close="deleteCategory(category)"
+          >{{category}}</el-tag>
+        </el-form-item>
+        <div class="submit-button">
+          <el-button
+            type="danger"
+            round
+            @click="edit"
+            :disabled="!this.instructor.fullname || !this.instructor.description ||  !this.instructor.avatar || !this.instructor.categories"
+          >Zapisz zmiany</el-button>
+        </div>
+      </el-form>
     </div>
-    <footer class="section-footer">
-      <el-button type="normal" round @click="$router.go(-1)">Anuluj</el-button>
-      <el-button type="success" round @click="edit">Zapisz</el-button>
-      <el-button type="danger" round @click="deleteInstructor">Usuń instruktora</el-button>
-    </footer>
   </section>
 </template>
 
 <script>
-import axios from 'axios';
-import { $API } from '@/main.js';
+import axios from "axios";
+import { $API } from "@/main.js";
 
 export default {
   name: "editInstructors",
@@ -56,20 +86,35 @@ export default {
   },
   data: () => ({
     instructor: {},
-    imageUrl: '',
-    newCategory: ""
+    imageUrl: "",
+    newCategory: "",
+    thumbnailImage: null
   }),
   methods: {
+    onFileChanged(event) {
+      this.instructor.avatar = event.target.files[0];
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(event.target.files[0]);
+
+      oFReader.onload = oFREvent => {
+        this.thumbnailImage = oFREvent.target.result;
+      };
+    },
     addCategory() {
       this.instructor.categories.push(this.newCategory);
       this.newCategory = "";
     },
     deleteCategory(category) {
-      this.instructor.categories.splice(this.instructor.categories.indexOf(category), 1);
+      this.instructor.categories.splice(
+        this.instructor.categories.indexOf(category),
+        1
+      );
     },
     async deleteInstructor() {
       try {
-        const response = await axios.delete(`${$API}/instructors/${this.instructor._id}`);
+        const response = await axios.delete(
+          `${$API}/instructors/${this.instructor._id}`
+        );
 
         if (response) {
           this.$router.push("/instruktorzy");
@@ -80,7 +125,7 @@ export default {
             type: "success"
           });
         }
-      } catch(error) {
+      } catch (error) {
         this.$notify({
           title: "Błąd",
           message: "Błąd serwera! Nie można usunąć instruktora",
@@ -90,7 +135,21 @@ export default {
     },
     async edit() {
       try {
-        const response = await axios.put(`${$API}/instructors/${this.instructor._id}/update`, this.instructor);
+        console.log(this.instructor);
+        
+        const formData = new FormData();
+        formData.append(
+          "avatar",
+          this.instructor.avatar,
+          this.instructor.avatar.name
+        );
+        formData.append("fullname", this.instructor.fullname);
+        formData.append("description", this.instructor.description);
+        formData.append("categories", this.instructor.categories);
+        const response = await axios.put(
+          `${$API}/instructors/${this.instructor._id}/update`,
+          formData
+        );
         this.$router.push("/instruktorzy");
 
         this.$notify({
@@ -110,7 +169,10 @@ export default {
   async created() {
     try {
       const response = await axios.get(`${$API}/instructors/${this.id}`);
+
       response.data ? (this.instructor = response.data.instructor) : false;
+
+      console.log(this.instructor);
     } catch (error) {
       this.$notify({
         title: "Błąd",
