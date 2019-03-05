@@ -38,6 +38,9 @@
           <wysiwyg v-model="project.content" placeholder="Treść projektu"/>
         </el-form-item>
       </el-form>
+      <div class="project-img document-upload">
+        <UploadFile/>
+      </div>
       <div class="project-img">
         <div class="project-img-tile">
           <h4 class="project-img-tile-header">Dodaj okładkę projektu</h4>
@@ -64,9 +67,13 @@
 <script>
 import axios from "axios";
 import { $API } from "@/main.js";
+import UploadFile from "../../components/UploadFile/UploadFile";
 
 export default {
   name: "AddProject",
+  components: {
+    UploadFile
+  },
   data: () => ({
     project: {
       title: "",
