@@ -31,7 +31,7 @@
       <el-input
         v-model="tile.adress"
         type="text"
-        placeholder="ul. Nawrot 46, Łódź "
+        placeholder="ul. Nowy Józefów 86, Łódź "
         name="address location"
         v-validate="'required'"
       ></el-input>

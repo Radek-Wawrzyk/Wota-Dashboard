@@ -25,22 +25,27 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { $API } from '@/main.js';
+import axios from "axios";
+import { $API } from "@/main.js";
 
 export default {
-  name: 'Courses',
+  name: "Courses",
   data: () => ({
-    search: '',
+    search: "",
     courses: []
   }),
   methods: {
     async deleteCourse(scope) {
       try {
-        const response = await axios.delete(`${$API}/courseList/${scope.row._id}`);
-
+        const response = await axios.delete(
+          `${$API}/courseList/${scope.row._id}`
+        );
+        const courses = await axios.get(`${$API}/courseList`);
+        courses ? (this.courses = courses.data) : false;
         if (response) {
-          const filteredCourses = this.courses.filter(course => course._id !== scope.row.id);
+          const filteredCourses = this.courses.filter(
+            course => course._id !== scope.row.id
+          );
           this.courses = filteredCourses;
 
           this.$notify({
@@ -49,7 +54,7 @@ export default {
             type: "success"
           });
         }
-      } catch(error) {
+      } catch (error) {
         this.$notify({
           title: "Błąd",
           message: "Błąd serwera! Nie można usunąć kursu",
@@ -61,9 +66,8 @@ export default {
   async created() {
     try {
       const response = await axios.get(`${$API}/courseList`);
-      response ? this.courses = response.data : false;
+      response ? (this.courses = response.data) : false;
       console.log(response);
-      
     } catch (error) {
       this.$notify({
         title: "Błąd",
@@ -71,7 +75,6 @@ export default {
         type: "error"
       });
     }
-  },
+  }
 };
-
 </script>

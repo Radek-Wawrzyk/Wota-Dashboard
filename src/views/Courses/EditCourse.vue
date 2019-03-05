@@ -102,8 +102,8 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
                 :disabled="true"
               ></el-time-picker>
             </el-col>
@@ -140,8 +140,8 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">
@@ -157,7 +157,7 @@
               >Dodaj</el-button>
             </el-col>
           </el-row>
-          <h5 class="element-category-title">Nawrot 46</h5>
+          <h5 class="element-category-title">Nowy Józefów 86</h5>
           <el-row
             :gutter="20"
             class="form-row"
@@ -188,8 +188,8 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
                 :disabled="true"
               ></el-time-picker>
             </el-col>
@@ -226,8 +226,8 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">

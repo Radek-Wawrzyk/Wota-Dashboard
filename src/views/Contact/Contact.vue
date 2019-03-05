@@ -11,11 +11,19 @@
         <ContactTile index="1"></ContactTile>
       </el-col>
     </el-row>
+    <el-row :gutter="60" style="margin-top: 60px;">
+      <el-col :md="12">
+        <ContactTile index="2"></ContactTile>
+      </el-col>
+      <el-col :md="12">
+        <ContactTile index="3"></ContactTile>
+      </el-col>
+    </el-row>
   </section>
 </template>
 
 <script>
-import ContactTile from '@/components/ContactTile/ContactTile.vue';
+import ContactTile from "@/components/ContactTile/ContactTile.vue";
 
 export default {
   name: "Contact",

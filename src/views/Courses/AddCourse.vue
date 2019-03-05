@@ -2,14 +2,14 @@
   <section id="add-courses" class="section section-one-column">
     <header class="section-header">
       <h1 class="section-header-title">Formularz kursu</h1>
-      <!-- {{this.course.schedule}} -->
+      {{this.course.schedule}}
     </header>
     <div class="course">
       <el-form>
         <el-form-item class="form-item-white">
-          <h3 class="element-title">Nazwa kursu</h3>
+          <h3 class="element-title">Kategoria kursu</h3>
           <el-input
-            placeholder="Nazwa kursu"
+            placeholder="Kategoria kursu"
             v-model="course.title"
             name="name"
             v-validate="'required'"
@@ -28,10 +28,12 @@
         <el-form-item class="form-item-white">
           <h3 class="element-title">Ikona kursu</h3>
           <img
+            v-if="coverImage || course.icon"
             :src="coverImage ? coverImage : course.icon"
             width="150"
             height="150"
-          ><br/>
+          >
+          <br v-if="coverImage || course.icon">
           <input type="file" ref="fileInput" @change="onFileChanged">
         </el-form-item>
         <el-form-item class="form-item-white">
@@ -108,14 +110,14 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
                 :disabled="true"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">
               <el-form-item label="Dni zajęć teoretycznych">
-                <el-input class="w-100" v-model="course.schedule[0].theoryDays" :disabled="true"></el-input>
+                <el-input class="w-100" v-model="item.theoryDays" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="3" class="item-centered">
@@ -139,15 +141,14 @@
             <el-col :span="7">
               <el-form-item label="Godziny zajęć kursu"></el-form-item>
               <el-time-picker
-                is-range
-                arrow-control
                 v-model="course.scheduleNewHoursFromTo"
+                is-range
                 range-separator="-"
                 start-placeholder="OD"
                 end-placeholder="DO"
+                format="HH:mm"
+                value-format="HH:mm"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">
@@ -163,7 +164,7 @@
               >Dodaj</el-button>
             </el-col>
           </el-row>
-          <h5 class="element-category-title">Nawrot 46</h5>
+          <h5 class="element-category-title">Nowy Józefów 86</h5>
           <el-row
             :gutter="20"
             class="form-row"
@@ -194,14 +195,14 @@
                 start-placeholder="OD"
                 end-placeholder="DO"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
+                format="HH:mm"
+                value-format="HH:mm"
                 :disabled="true"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">
               <el-form-item label="Dni zajęć teoretycznych">
-                <el-input class="w-100" v-model="course.schedule[1].theoryDays" :disabled="true"></el-input>
+                <el-input class="w-100" v-model="item.theoryDays" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="3" class="item-centered">
@@ -225,15 +226,14 @@
             <el-col :span="7">
               <el-form-item label="Godziny zajęć kursu"></el-form-item>
               <el-time-picker
-                is-range
-                arrow-control
                 v-model="course.scheduleNewHoursFromTo2"
+                is-range
                 range-separator="-"
                 start-placeholder="OD"
                 end-placeholder="DO"
+                format="HH:mm"
+                value-format="HH:mm"
                 class="w-100"
-                format="hh:mm"
-                value-format="hh:mm"
               ></el-time-picker>
             </el-col>
             <el-col :span="7">
@@ -337,7 +337,7 @@ export default {
       const formData = new FormData();
       formData.append("title", this.course.title);
       formData.append("description", this.course.description);
-      formData.append("comments", this.course.comments);
+      formData.append("comments", this.course.comments || 'Brak');
       formData.append("price", this.course.parameters.price);
       formData.append("practise", this.course.parameters.practise);
       formData.append("theory", this.course.parameters.theory);
