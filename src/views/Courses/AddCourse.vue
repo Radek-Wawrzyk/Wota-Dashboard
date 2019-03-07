@@ -2,7 +2,7 @@
   <section id="add-courses" class="section section-one-column">
     <header class="section-header">
       <h1 class="section-header-title">Formularz kursu</h1>
-      {{this.course.schedule}}
+      <!-- {{this.course.schedule}} -->
     </header>
     <div class="course">
       <el-form>
@@ -79,7 +79,7 @@
         </el-form-item>
         <el-form-item class="form-item-white">
           <h3 class="element-title">Terminy kursu</h3>
-          <h5 class="element-category-title">Retkińska 83</h5>
+          <h5 class="element-category-title">Piwna 3</h5>
           <el-row
             :gutter="20"
             class="form-row"
@@ -164,7 +164,7 @@
               >Dodaj</el-button>
             </el-col>
           </el-row>
-          <h5 class="element-category-title">Nowy Józefów 86</h5>
+          <h5 class="element-category-title">Nowy Józefów 6</h5>
           <el-row
             :gutter="20"
             class="form-row"
@@ -249,6 +249,91 @@
               >Dodaj</el-button>
             </el-col>
           </el-row>
+          <h5 class="element-category-title">Retkińska 83</h5>
+          <el-row
+            :gutter="20"
+            class="form-row"
+            v-for="item in course.schedule[2].values"
+            :key="item.index"
+          >
+            <el-col :span="7">
+              <el-form-item label="Termin kursu"></el-form-item>
+              <el-date-picker
+                v-model="item.dayFromTo"
+                type="daterange"
+                align="right"
+                start-placeholder="OD"
+                end-placeholder="DO"
+                class="w-100"
+                format="dd/MM/yyyy"
+                value-format="dd/MM/yyyy"
+                :disabled="true"
+              ></el-date-picker>
+            </el-col>
+            <el-col :span="7">
+              <el-form-item label="Godziny zajęć kursu"></el-form-item>
+              <el-time-picker
+                is-range
+                arrow-control
+                v-model="item.hoursFromTo"
+                range-separator="-"
+                start-placeholder="OD"
+                end-placeholder="DO"
+                class="w-100"
+                format="HH:mm"
+                value-format="HH:mm"
+                :disabled="true"
+              ></el-time-picker>
+            </el-col>
+            <el-col :span="7">
+              <el-form-item label="Dni zajęć teoretycznych">
+                <el-input class="w-100" v-model="item.theoryDays" :disabled="true"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="3" class="item-centered">
+              <el-button type="danger">Usuń</el-button>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="form-row">
+            <el-col :span="7">
+              <el-form-item label="Termin kursu"></el-form-item>
+              <el-date-picker
+                v-model="course.scheduleNewDayFromTo3"
+                type="daterange"
+                align="right"
+                start-placeholder="OD"
+                end-placeholder="DO"
+                class="w-100"
+                format="dd/MM/yyyy"
+                value-format="dd/MM/yyyy"
+              ></el-date-picker>
+            </el-col>
+            <el-col :span="7">
+              <el-form-item label="Godziny zajęć kursu"></el-form-item>
+              <el-time-picker
+                v-model="course.scheduleNewHoursFromTo3"
+                is-range
+                range-separator="-"
+                start-placeholder="OD"
+                end-placeholder="DO"
+                format="HH:mm"
+                value-format="HH:mm"
+                class="w-100"
+              ></el-time-picker>
+            </el-col>
+            <el-col :span="7">
+              <el-form-item label="Dni zajęć teoretycznych">
+                <el-input class="w-100" v-model="course.scheduleNewTheoryDays3"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="3" class="item-centered">
+              <el-button
+                type="primary"
+                @click="addScheduleItem('adress3')"
+                :disabled="!course.scheduleNewDayFromTo3 || !course.scheduleNewHoursFromTo3 || !course.scheduleNewTheoryDays3"
+              >Dodaj</el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-button
           type="primary"
@@ -287,7 +372,8 @@ export default {
           values: [],
           theoryDays: ""
         },
-        { type: "adress2324", values: [], theoryDays: "" }
+        { type: "adress2", values: [], theoryDays: "" },
+        { type: "adress3", values: [], theoryDays: "" }
       ],
       scheduleNewDayFromTo: "",
       scheduleNewHoursFromTo: "",
@@ -295,6 +381,9 @@ export default {
       scheduleNewDayFromTo2: "",
       scheduleNewHoursFromTo2: "",
       scheduleNewTheoryDays2: "",
+      scheduleNewDayFromTo3: "",
+      scheduleNewHoursFromTo3: "",
+      scheduleNewTheoryDays3: "",
       icon: null
     },
     coverImage: null
@@ -321,7 +410,7 @@ export default {
         this.course.scheduleNewDayFromTo = "";
         this.course.scheduleNewHoursFromTo = "";
         this.course.scheduleNewTheoryDays = "";
-      } else {
+      } else if (type === "adress2") {
         newValue = Object.assign({
           dayFromTo: this.course.scheduleNewDayFromTo2,
           hoursFromTo: this.course.scheduleNewHoursFromTo2,
@@ -331,13 +420,23 @@ export default {
         this.course.scheduleNewDayFromTo2 = "";
         this.course.scheduleNewHoursFromTo2 = "";
         this.course.scheduleNewTheoryDays2 = "";
+      } else {
+        newValue = Object.assign({
+          dayFromTo: this.course.scheduleNewDayFromTo3,
+          hoursFromTo: this.course.scheduleNewHoursFromTo3,
+          theoryDays: this.course.scheduleNewTheoryDays3
+        });
+        this.course.schedule[2].values.push(newValue);
+        this.course.scheduleNewDayFromTo3 = "";
+        this.course.scheduleNewHoursFromTo3 = "";
+        this.course.scheduleNewTheoryDays3 = "";
       }
     },
     async submitForm() {
       const formData = new FormData();
       formData.append("title", this.course.title);
       formData.append("description", this.course.description);
-      formData.append("comments", this.course.comments || 'Brak');
+      formData.append("comments", this.course.comments || "Brak");
       formData.append("price", this.course.parameters.price);
       formData.append("practise", this.course.parameters.practise);
       formData.append("theory", this.course.parameters.theory);

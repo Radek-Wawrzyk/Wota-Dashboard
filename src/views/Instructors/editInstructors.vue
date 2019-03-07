@@ -35,7 +35,6 @@
             v-model="instructor.description"
             placeholder="Opis"
             name="description"
-            v-validate="'required'"
           ></el-input>
           <transition name="fade-down">
             <span
@@ -67,7 +66,7 @@
             type="danger"
             round
             @click="edit"
-            :disabled="!this.instructor.fullname || !this.instructor.description ||  !this.instructor.avatar || !this.instructor.categories"
+            :disabled="!this.instructor.fullname ||  !this.instructor.avatar || !this.instructor.categories"
           >Zapisz zmiany</el-button>
         </div>
       </el-form>
@@ -144,7 +143,7 @@ export default {
           this.instructor.avatar.name
         );
         formData.append("fullname", this.instructor.fullname);
-        formData.append("description", this.instructor.description);
+        formData.append("description", this.instructor.description || '');
         formData.append("categories", this.instructor.categories);
         const response = await axios.put(
           `${$API}/instructors/${this.instructor._id}/update`,
