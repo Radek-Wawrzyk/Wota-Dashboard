@@ -2,7 +2,7 @@
   <section id="add-courses" class="section section-one-column">
     <header class="section-header">
       <h1 class="section-header-title">Formularz kursu</h1>
-      <!-- {{this.course.schedule}} -->
+      {{this.course.icon}}
     </header>
     <div class="course">
       <el-form>
@@ -450,7 +450,19 @@ export default {
         }
       };
       try {
-        const response = await axios.post(`${$API}/courses`, formData, config);
+        let response;
+        if (this.id) {
+          response = await axios.put(
+            `${$API}/courses/${this.id}/update`,
+            formData
+          );
+        } else {
+          response = await axios.post(
+            `${$API}/courses`,
+            formData,
+            config
+          );
+        }
         this.$router.push("/kursy");
         console.log(response);
 

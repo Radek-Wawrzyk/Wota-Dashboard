@@ -249,7 +249,7 @@
           class="submit-button"
           @click="submitForm"
           :disabled="!course.title || !course.description"
-        >Dodaj kurs</el-button>
+        >Dodajcvghdf kurs</el-button>
       </el-form>
     </div>
   </section>
