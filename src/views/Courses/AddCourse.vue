@@ -2,7 +2,6 @@
   <section id="add-courses" class="section section-one-column">
     <header class="section-header">
       <h1 class="section-header-title">Formularz kursu</h1>
-      {{this.course.icon}}
     </header>
     <div class="course">
       <el-form>
@@ -83,7 +82,7 @@
           <el-row
             :gutter="20"
             class="form-row"
-            v-for="item in course.schedule[0].values"
+            v-for="(item, index) in course.schedule[0].values"
             :key="item.index"
           >
             <el-col :span="7">
@@ -121,7 +120,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="3" class="item-centered">
-              <el-button type="danger">Usuń</el-button>
+              <el-button type="danger" @click="removeScheduleItem(index, 0)">Usuń</el-button>
             </el-col>
           </el-row>
           <el-row :gutter="20" class="form-row">
@@ -206,7 +205,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="3" class="item-centered">
-              <el-button type="danger">Usuń</el-button>
+              <el-button type="danger" @click="removeScheduleItem(index, 1)">Usuń</el-button>
             </el-col>
           </el-row>
           <el-row :gutter="20" class="form-row">
@@ -291,7 +290,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="3" class="item-centered">
-              <el-button type="danger">Usuń</el-button>
+              <el-button type="danger" @click="removeScheduleItem(index, 2)">Usuń</el-button>
             </el-col>
           </el-row>
           <el-row :gutter="20" class="form-row">
@@ -349,6 +348,7 @@
 <script>
 import axios from "axios";
 import { $API } from "@/main.js";
+import uuid from "uuid";
 
 export default {
   name: "AddCourses",
@@ -397,6 +397,9 @@ export default {
       oFReader.onload = oFREvent => {
         this.coverImage = oFREvent.target.result;
       };
+    },
+    removeScheduleItem(item, scheduleIndex) {
+      this.course.schedule[scheduleIndex].values.splice(item, 1);
     },
     addScheduleItem(type) {
       let newValue;
@@ -457,11 +460,7 @@ export default {
             formData
           );
         } else {
-          response = await axios.post(
-            `${$API}/courses`,
-            formData,
-            config
-          );
+          response = await axios.post(`${$API}/courses`, formData, config);
         }
         this.$router.push("/kursy");
         console.log(response);

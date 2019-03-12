@@ -1,18 +1,27 @@
 <template>
   <section id="instructors" class="section">
     <header class="section-header">
-      <h1 class="section-header-title">Instruktorzy</h1>
+      <h1 class="section-header-index">Instruktorzy</h1>
       <el-button type="danger" round @click="$router.push(`/instruktorzy/dodaj-instruktora`)">Dodaj</el-button>
     </header>
+    <div class="indexButton" v-bind:style="{marginBottom: '25px'}">
+      <!-- <el-button @click="editIndexes">{{this.isEditing ? 'Zapisz' : 'Edytuj'}} kolejność</el-button> -->
+    </div>
     <el-table
       :data="instructors.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       border
       empty-text="Brak instruktorów"
     >
+      <el-table-column label="Kolejność" prop="index">
+        <template slot-scope="scope">
+          <!-- {{scope.row}} -->
+          <el-input v-model="scope.row.index" :disabled="!isEditing"></el-input>
+        </template>
+      </el-table-column>
       <el-table-column label="Instruktor" prop="fullname"></el-table-column>
       <el-table-column label="Kursy" prop="categories"></el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="right" size="small">
         <!-- <template slot="header" slot-scope="scope">
           <el-input v-model="search" size="mini" placeholder="Znajdź instruktora"/>
         </template>-->
@@ -33,9 +42,43 @@ export default {
   name: "Instructors",
   data: () => ({
     search: "",
-    instructors: []
+    instructors: [],
+    isEditing: false
   }),
   methods: {
+    async editIndexes() {
+      if (this.isEditing) {
+        this.instructors.sort(function(a, b) {
+          if (a.index < b.index) {
+            return -1;
+          }
+          if (a.index > b.index) {
+            return 1;
+          }
+          return 0;
+        });
+        try {
+          const response = await axios.patch(
+            `${$API}/instructors`,
+            this.instructors
+          );
+          console.log(response);
+
+          this.$notify({
+            index: "Sukces",
+            message: "Pomyślnie usunięto instruktora",
+            type: "success"
+          });
+        } catch (error) {
+          this.$notify({
+            index: "Błąd",
+            message: "Błąd serwera! Nie można usunąć instruktora",
+            type: "error"
+          });
+        }
+      }
+      this.isEditing = !this.isEditing;
+    },
     async deleteInstructor(scope) {
       try {
         const response = await axios.delete(
@@ -47,14 +90,14 @@ export default {
           response ? (this.instructors = response.data) : false;
 
           this.$notify({
-            title: "Sukces",
+            index: "Sukces",
             message: "Pomyślnie usunięto instruktora",
             type: "success"
           });
         }
       } catch (error) {
         this.$notify({
-          title: "Błąd",
+          index: "Błąd",
           message: "Błąd serwera! Nie można usunąć instruktora",
           type: "error"
         });
@@ -67,7 +110,7 @@ export default {
       response ? (this.instructors = response.data) : false;
     } catch (error) {
       this.$notify({
-        title: "Błąd",
+        index: "Błąd",
         message: "Błąd serwera!",
         type: "error"
       });

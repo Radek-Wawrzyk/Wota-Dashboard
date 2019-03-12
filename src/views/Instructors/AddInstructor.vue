@@ -121,6 +121,7 @@ export default {
             this.instructor.avatar,
             this.instructor.avatar.name
           );
+          formData.append("index", 16);
           formData.append("fullname", this.instructor.fullname);
           formData.append("description", this.instructor.description || '');
           formData.append("categories", this.instructor.categories);

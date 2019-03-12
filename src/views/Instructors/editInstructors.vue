@@ -135,15 +135,16 @@ export default {
     async edit() {
       try {
         console.log(this.instructor);
-        
+
         const formData = new FormData();
         formData.append(
           "avatar",
           this.instructor.avatar,
           this.instructor.avatar.name
         );
+        formData.append("index", this.instructor.index);
         formData.append("fullname", this.instructor.fullname);
-        formData.append("description", this.instructor.description || '');
+        formData.append("description", this.instructor.description || "");
         formData.append("categories", this.instructor.categories);
         const response = await axios.put(
           `${$API}/instructors/${this.instructor._id}/update`,
