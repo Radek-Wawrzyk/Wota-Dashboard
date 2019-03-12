@@ -5,7 +5,7 @@
       <el-button type="danger" round @click="$router.push(`/instruktorzy/dodaj-instruktora`)">Dodaj</el-button>
     </header>
     <div class="indexButton" v-bind:style="{marginBottom: '25px'}">
-      <!-- <el-button @click="editIndexes">{{this.isEditing ? 'Zapisz' : 'Edytuj'}} kolejność</el-button> -->
+      <el-button @click="editIndexes">{{this.isEditing ? 'Zapisz' : 'Edytuj'}} kolejność</el-button>
     </div>
     <el-table
       :data="instructors.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -88,7 +88,15 @@ export default {
         if (response) {
           const response = await axios.get(`${$API}/instructors`);
           response ? (this.instructors = response.data) : false;
-
+          this.instructors.sort(function(a, b) {
+            if (a.index < b.index) {
+              return -1;
+            }
+            if (a.index > b.index) {
+              return 1;
+            }
+            return 0;
+          });
           this.$notify({
             index: "Sukces",
             message: "Pomyślnie usunięto instruktora",
@@ -108,6 +116,15 @@ export default {
     try {
       const response = await axios.get(`${$API}/instructors`);
       response ? (this.instructors = response.data) : false;
+      this.instructors.sort(function(a, b) {
+        if (a.index < b.index) {
+          return -1;
+        }
+        if (a.index > b.index) {
+          return 1;
+        }
+        return 0;
+      });
     } catch (error) {
       this.$notify({
         index: "Błąd",
