@@ -25,8 +25,8 @@ Vue.use(ElementUI);
 Vue.use(VeeValidate);
 Vue.use(wysiwyg, {});
 
-// export const $API = Vue.prototype.$API = 'https://hubertkuzdak.com';
-export const $API = Vue.prototype.$API = 'http://localhost:3000';
+export const $API = Vue.prototype.$API = 'https://hubertkuzdak.com';
+// export const $API = Vue.prototype.$API = 'http://localhost:3000';
 
 Vue.config.productionTip = false;
 
