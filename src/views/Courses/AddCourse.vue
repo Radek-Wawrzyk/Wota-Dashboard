@@ -339,7 +339,7 @@
           class="submit-button"
           @click="submitForm"
           :disabled="!course.title || !course.description"
-        >Dodaj kurs</el-button>
+        >{{this.id ? 'Zapisz zmiany': 'Dodaj kurs'}}</el-button>
       </el-form>
     </div>
   </section>
