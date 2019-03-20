@@ -6,6 +6,9 @@
     <div class="project">
       <el-form class="instructor-tile">
         <el-form-item>
+          <el-input type="number" v-model="project.index" placeholder="Kolejność" name="index"></el-input>
+        </el-form-item>
+        <el-form-item>
           <el-input
             type="text"
             v-model="project.title"
