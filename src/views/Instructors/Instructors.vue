@@ -62,17 +62,16 @@ export default {
             `${$API}/instructors`,
             this.instructors
           );
-          console.log(response);
 
-          this.$notify({
-            index: "Sukces",
-            message: "Pomyślnie usunięto instruktora",
-            type: "success"
-          });
+          // this.$notify({
+          //   index: "Sukces",
+          //   message: "Pomyślnie usunięto instruktora",
+          //   type: "success"
+          // });
         } catch (error) {
           this.$notify({
             index: "Błąd",
-            message: "Błąd serwera! Nie można usunąć instruktora",
+            message: "Błąd serwera!",
             type: "error"
           });
         }

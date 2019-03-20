@@ -92,6 +92,7 @@ export default {
       formData.append("subtitle", this.project.subTitle);
       formData.append("content", this.project.content);
       formData.append("image", this.project.coverImage);
+      formData.append("index", 10);
       formData.append("status", true);
 
       const request = async () => {

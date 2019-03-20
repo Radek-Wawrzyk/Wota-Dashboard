@@ -4,12 +4,21 @@
       <h1 class="section-header-title">Projekty</h1>
       <el-button type="danger" round @click="$router.push(`/projekty/dodaj-projekt`)">Dodaj</el-button>
     </header>
+    <div class="indexButton" v-bind:style="{marginBottom: '25px'}">
+      <el-button @click="editIndexes">{{this.isEditing ? 'Zapisz' : 'Edytuj'}} kolejność</el-button>
+    </div>
     <el-table
       :data="projects.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       border
       empty-text="Brak projektów"
     >
+      <el-table-column label="Kolejność" prop="index">
+        <template slot-scope="scope">
+          <!-- {{scope.row}} -->
+          <el-input v-model="scope.row.index" :disabled="!isEditing"></el-input>
+        </template>
+      </el-table-column>
       <el-table-column label="Tytuł" prop="title"></el-table-column>
       <el-table-column label="Podtytuł" prop="subtitle"></el-table-column>
       <el-table-column align="right">
@@ -49,9 +58,41 @@ export default {
   name: "Projects",
   data: () => ({
     search: "",
-    projects: []
+    projects: [],
+    isEditing: false
   }),
   methods: {
+    async editIndexes() {
+      if (this.isEditing) {
+        this.projects.sort(function(a, b) {
+          if (a.index < b.index) {
+            return -1;
+          }
+          if (a.index > b.index) {
+            return 1;
+          }
+          return 0;
+        });
+        try {
+          const response = await axios.patch(
+            `${$API}/projects`,
+            this.projects
+          );
+          // this.$notify({
+          //   index: "Sukces",
+          //   message: "Pomyślnie usunięto instruktora",
+          //   type: "success"
+          // });
+        } catch (error) {
+          this.$notify({
+            index: "Błąd",
+            message: "Błąd serwera! Nie można usunąć instruktora",
+            type: "error"
+          });
+        }
+      }
+      this.isEditing = !this.isEditing;
+    },
     async changeProjectStatus(scope) {
       console.log(scope);
 
@@ -95,6 +136,8 @@ export default {
     try {
       const response = await axios.get(`${$API}/projects`);
       response ? (this.projects = response.data) : false;
+      console.log(this.projects);
+      
     } catch (error) {
       this.$notify({
         title: "Błąd",
