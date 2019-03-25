@@ -81,6 +81,11 @@ export default new Router({
           component: () => import('./views/Courses/AddCourse.vue'),
           props: true
         },
+        {
+          path: '/opinie',
+          name: 'Opinions',
+          component: () => import('./views/Opinions/Opinions.vue'),
+        },
         // {
         //   path: '/kursy/:id',
         //   name: 'EditCourse',
