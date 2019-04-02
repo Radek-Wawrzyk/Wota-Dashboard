@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store/index';
 
 Vue.use(Router);
 
@@ -10,7 +11,15 @@ export default new Router({
     {
       path: '/',
       name: 'Dashboard',
+      redirect: '/kursy',
       component: () => import('./views/Dashboard.vue'),
+      beforeEnter: (to, from, next) => {
+        if (store.state.auth.token) {
+          next();
+        } else {
+          next('/logowanie');
+        }
+      },
       children: [
         {
           path: '/instruktorzy',
@@ -97,7 +106,14 @@ export default new Router({
     {
       path: '/logowanie',
       name: 'Login',
-      component: () => import('./views/Login/Login.vue')
+      component: () => import('./views/Login/Login.vue'),
+      beforeEnter: (to, from, next) => {
+        if (store.state.auth.token) {
+          next('/');
+        } else {
+          next();
+        }
+      },
     }
   ]
 });

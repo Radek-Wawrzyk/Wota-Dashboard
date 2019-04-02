@@ -8,7 +8,7 @@
         <el-input
           v-model="credentials.email"
           type="email"
-          placeholder="przykładowy@email.pl"
+          placeholder="Email"
           name="email"
           v-validate="'required|email'"
         ></el-input>
@@ -20,7 +20,7 @@
         <el-input
           v-model="credentials.password"
           type="password"
-          placeholder="przykładowe hasło"
+          placeholder="Hasło"
           name="password"
           v-validate="'required|min:8'"
         ></el-input>
@@ -35,23 +35,15 @@
         <el-button type="danger" @click="submitForm" round :loading="loading">Zaloguj się</el-button>
       </el-form-item>
     </el-form>
-    <footer class="login-footer">
-      Panel wykonany przez
-      <a
-        href="http://radek-wawrzyk.pl/"
-        aria-label="Radosław Wawrzyk - Front End Developer"
-        title="Radosław Wawrzyk - Front End Developer"
-      >Radziu</a>
-    </footer>
     <Preloader :loading="loading" v-if="!token"/>
   </main>
 </template>
 
 <script>
-import { $API } from '@/main.js';
-import axios from 'axios';
-import Preloader from '@/components/Preloader/Preloader.vue';
-import { mapState } from 'vuex';
+import { $API } from "@/main.js";
+import axios from "axios";
+import Preloader from "@/components/Preloader/Preloader.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Login",
@@ -63,7 +55,7 @@ export default {
     loading: true,
     loadingRequest: false
   }),
-  components: { 
+  components: {
     Preloader
   },
   computed: mapState({
@@ -81,18 +73,23 @@ export default {
       const request = async () => {
         this.loadingRequest = true;
         try {
-          const response = await axios.post(`${$API}/login`, this.credentials);
-          response ? this.$store.commit('LOGIN', response.data) : false;
-        } catch(error) {
+          const response = await axios.post(
+            `${$API}/api/auth`,
+            this.credentials
+          );
+          const {
+            data: { token }
+          } = response;
+          this.$store.commit("LOGIN", { token });
+        } catch (error) {
           this.loadingRequest = false;
-
           this.$notify({
             title: "Błąd",
             message: "Nie ma takiego użytkownika!",
             type: "error"
           });
         }
-      }
+      };
 
       valid ? request() : false;
     }
