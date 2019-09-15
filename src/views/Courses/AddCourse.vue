@@ -167,7 +167,7 @@
           <el-row
             :gutter="20"
             class="form-row"
-            v-for="item in course.schedule[1].values"
+            v-for="(item, index) in course.schedule[1].values"
             :key="item.index"
           >
             <el-col :span="7">
@@ -252,7 +252,7 @@
           <el-row
             :gutter="20"
             class="form-row"
-            v-for="item in course.schedule[2].values"
+            v-for="(item, index) in course.schedule[2].values"
             :key="item.index"
           >
             <el-col :span="7">
@@ -445,7 +445,7 @@ export default {
       formData.append("theory", this.course.parameters.theory);
       formData.append("additional", this.course.parameters.additional);
       formData.append("schedule", JSON.stringify(this.course.schedule));
-      formData.append("icon", this.course.icon, this.course.icon.name);
+      // formData.append("icon", this.course.icon, this.course.icon.name);
 
       const config = {
         headers: {
